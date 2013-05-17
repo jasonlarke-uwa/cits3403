@@ -1,6 +1,17 @@
 Cits3403::Application.routes.draw do
   devise_for :users
-
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  root :to => 'main#index'
+  
+  # routing for the album/image hierarchy
+  resources :albums do
+	resources :images
+  end
+  
+  # Specify a default controller
+  match '/:action(/:id)', :controller => :main
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -47,13 +58,6 @@ Cits3403::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => 'main#index'
-  
-  # Specify a default controller
-  match '/:action(/:id)', :controller => :main
   
   # See how all your routes lay out with "rake routes"
 

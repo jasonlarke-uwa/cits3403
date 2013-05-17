@@ -11,7 +11,44 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515050119) do
+ActiveRecord::Schema.define(:version => 20130516171751) do
+
+  create_table "albums", :force => true do |t|
+    t.integer  "owner_id",                        :null => false
+    t.integer  "privacy_level_id",                :null => false
+    t.string   "title",            :limit => 64
+    t.string   "description",      :limit => 512
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  create_table "geotag_infos", :force => true do |t|
+    t.integer  "image_id",                                 :null => false
+    t.decimal  "longitude",  :precision => 9, :scale => 6
+    t.decimal  "latitude",   :precision => 9, :scale => 6
+    t.decimal  "accuracy",   :precision => 9, :scale => 6
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+  end
+
+  create_table "images", :force => true do |t|
+    t.integer  "album_id",                  :null => false
+    t.string   "uniqid",     :limit => 16,  :null => false
+    t.string   "caption",    :limit => 256
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "mime",       :limit => 32
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "images", ["uniqid"], :name => "index_images_on_uniqid", :unique => true
+
+  create_table "privacy_levels", :force => true do |t|
+    t.string   "hint",       :limit => 16
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"
