@@ -31,6 +31,7 @@ class CreateImageBackend < ActiveRecord::Migration
 	
 	create_table(:privacy_levels) do |t|
 		t.string :hint, :limit => 16
+		t.string :display, :limit => 32
 		
 		t.timestamps
 	end

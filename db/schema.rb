@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130516171751) do
+ActiveRecord::Schema.define(:version => 20130518131805) do
 
   create_table "albums", :force => true do |t|
     t.integer  "owner_id",                        :null => false
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(:version => 20130516171751) do
     t.string   "description",      :limit => 512
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+  end
+
+  create_table "friends", :force => true do |t|
+    t.integer  "initiator_id"
+    t.integer  "recipient_id"
+    t.string   "confirmation", :limit => 32
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "geotag_infos", :force => true do |t|
@@ -48,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20130516171751) do
     t.string   "hint",       :limit => 16
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.string   "display"
   end
 
   create_table "roles", :force => true do |t|

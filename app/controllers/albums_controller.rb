@@ -1,10 +1,12 @@
 class AlbumsController < ApplicationController
-  before_filter :authenticate_user!
+  include ContextValidator
+  
+  before_filter :authenticate_user!, :except => :show
 
   # GET /albums
   # GET /albums.json
   def index
-    @albums = Album.all
+    @albums = Album.where(:owner_id => current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,17 +19,21 @@ class AlbumsController < ApplicationController
   def show
     @album = Album.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @album }
-    end
+	if validate_album_permissions(@album, :show, current_user.nil? ? nil : current_user.id)
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @album }
+      end
+	else
+	  redirect_to (!current_user.nil? ? { :action => :index } : root_path)
+	end
   end
 
   # GET /albums/new
   # GET /albums/new.json
   def new
     @album = Album.new
-
+	
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @album }
@@ -37,22 +43,26 @@ class AlbumsController < ApplicationController
   # GET /albums/1/edit
   def edit
     @album = Album.find(params[:id])
+	unless validate_album_permissions(@album, :edit, current_user.nil? ? nil : current_user.id)
+		redirect_to (!current_user.nil? ? { :action => :index } : root_path)
+	end
   end
 
   # POST /albums
   # POST /albums.json
   def create
-    @album = Album.new(params[:album])
+	@album = Album.new(params[:album])
+	@album.owner = current_user
 
-    respond_to do |format|
-      if @album.save
-        format.html { redirect_to @album, notice: 'Album was successfully created.' }
-        format.json { render json: @album, status: :created, location: @album }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @album.errors, status: :unprocessable_entity }
-      end
-    end
+	respond_to do |format|
+		if @album.save
+			format.html { redirect_to @album, notice: 'Album was successfully created.' }
+			format.json { render json: @album, status: :created, location: @album }
+		else
+			format.html { render action: "new" }
+			format.json { render json: @album.errors, status: :unprocessable_entity }
+		end
+	end
   end
 
   # PUT /albums/1
