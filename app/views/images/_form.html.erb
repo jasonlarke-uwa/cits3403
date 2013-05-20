@@ -1,4 +1,7 @@
-<%= form_for(@image) do |f| %>
+<%= form_for([@album, @image], { :multipart => true }) do |f| %>
+	<%= hidden_field(:geo, :latitude) %>
+	<%= hidden_field(:geo, :longitude) %>
+	<%= hidden_field(:geo, :accuracy) %>
   <% if @image.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
@@ -12,6 +15,21 @@
   <% end %>
 
   <div class="actions">
+	<%= file_field(:upload, :image, :accept => 'image/*') %>
     <%= f.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+	(function(d,la,lo,a) {
+		navigator.geolocation.getCurrentPosition(function(pos) {
+			la = d.getElementById(la) || {};
+			lo = d.getElementById(lo) || {};
+			a = d.getElementById(a) || {};
+			var c = pos.coords;
+			la.value = c.latitude;
+			lo.value = c.longitude;
+			a.value = c.accuracy;
+		})
+	})(document,'geo_latitude','geo_longitude','geo_accuracy');
+</script>

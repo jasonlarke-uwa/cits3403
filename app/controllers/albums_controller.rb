@@ -1,7 +1,7 @@
 class AlbumsController < ApplicationController
   include ContextValidator
   
-  before_filter :authenticate_user!, :except => :show
+  before_filter :access_control!
 
   # GET /albums
   # GET /albums.json
@@ -17,16 +17,10 @@ class AlbumsController < ApplicationController
   # GET /albums/1
   # GET /albums/1.json
   def show
-    @album = Album.find(params[:id])
-
-	if validate_album_permissions(@album, :show, current_user.nil? ? nil : current_user.id)
-      respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: @album }
-      end
-	else
-	  redirect_to (!current_user.nil? ? { :action => :index } : root_path)
-	end
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @album }
+    end
   end
 
   # GET /albums/new
@@ -42,10 +36,8 @@ class AlbumsController < ApplicationController
 
   # GET /albums/1/edit
   def edit
-    @album = Album.find(params[:id])
-	unless validate_album_permissions(@album, :edit, current_user.nil? ? nil : current_user.id)
-		redirect_to (!current_user.nil? ? { :action => :index } : root_path)
-	end
+	# all pertinent logic for obtaining the album is done via the access control method
+	# and the default view is used, and the only format is html
   end
 
   # POST /albums
@@ -91,5 +83,22 @@ class AlbumsController < ApplicationController
       format.html { redirect_to albums_url }
       format.json { head :no_content }
     end
+  end
+  
+  private
+  
+  def access_control!
+	action = params[:action]
+	return false unless (action == 'show' || authenticate_user!)
+	return true if (action == 'new' || action == 'create' || action == 'index')
+
+	@album = Album.find(params[:id]) || record_not_found
+	
+	if !validate_album_permissions(@album, action, current_user.nil? ? nil : current_user.id)
+		permission_denied
+		return false
+	else
+		return true
+	end
   end
 end

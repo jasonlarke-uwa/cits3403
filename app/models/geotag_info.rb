@@ -1,5 +1,5 @@
 class GeotagInfo < ActiveRecord::Base
 	belongs_to :image
 	
-	attr_readonly :longitude, :latitude, :accuracy
+	attr_accessible :longitude, :latitude, :accuracy
 end

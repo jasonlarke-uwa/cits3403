@@ -6,11 +6,11 @@ Cits3403::Application.routes.draw do
   
   # routing for the album/image hierarchy
   resources :albums do
-	resources :images
+	resources :images, :shallow => true
   end
   
   # Specify a default controller
-  match '/:action(/:id)', :controller => :main
+  # match '/:action(/:id)', :controller => :main
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

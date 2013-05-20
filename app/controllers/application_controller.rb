@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
       stored_location_for(resource) || request.referer || root_path
     end
   end
+  
+  def permission_denied
+	render :file => "public/401.html", :status => :unauthorized, :layout => true
+  end
 end

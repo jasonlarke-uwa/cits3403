@@ -6,7 +6,7 @@ class Image < ActiveRecord::Base
 	attr_readonly :uniqid, :width, :height, :mime
 	
 	validates :caption, :length => { :maximum => 256 }
-	validates :mime, :length { :maximum => 16 }
+	validates :mime, :length => { :maximum => 16 }
 	
 	before_create :generate_uuid
 	

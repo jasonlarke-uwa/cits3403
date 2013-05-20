@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130518131805) do
+ActiveRecord::Schema.define(:version => 20130518090458) do
 
   create_table "albums", :force => true do |t|
     t.integer  "owner_id",                        :null => false
@@ -54,9 +54,9 @@ ActiveRecord::Schema.define(:version => 20130518131805) do
 
   create_table "privacy_levels", :force => true do |t|
     t.string   "hint",       :limit => 16
+    t.string   "display",    :limit => 32
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-    t.string   "display"
   end
 
   create_table "roles", :force => true do |t|
