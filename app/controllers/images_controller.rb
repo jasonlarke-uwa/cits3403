@@ -49,7 +49,7 @@ class ImagesController < ApplicationController
 	params[:geo] = [] unless params.has_key?(:geo)
 	params[:upload][:directory] = 'public/i/'
 		
-	upload = FileUpload.new(params[:upload])
+	upload = ImageUpload.new(params[:upload])
     @image = Image.new(params[:image])
 	@image.album = @album
 	
@@ -67,10 +67,6 @@ class ImagesController < ApplicationController
 			# the result though, as all the really useful image data has been recorded
 			geo = GeotagInfo.new(params[:geo])
 			geo.image = @image
-			if (!geo.save)
-				logger.info(geo.errors.inspect)
-				logger.info(geo.inspect)
-			end
 		elsif !valid
 			# image didn't save to the database, delete the files from the system
 			upload.destroy

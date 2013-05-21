@@ -1,5 +1,12 @@
-class FileUpload
+require 'rubygems'
+require 'rmagick'
+
+class ImageUpload
 	include ActiveModel::Validations
+	
+	SMALL_IMAGE = [128, 128]
+	MEDIUM_IMAGE = [400, 400]
+	LARGE_IMAGE = [1024, 1024]
 	
 	attr_accessor :upload
 	attr_accessor :use_geo
@@ -29,9 +36,12 @@ class FileUpload
 		begin
 			tmp = @upload.tempfile
 			FileUtils.cp tmp.path, path
+			# todo: Get build_thumbnails working
+			# build_thumbnails
 			return true
-		rescue Exception => e
-			puts "EXCEPTION :::: #{e.inspect}"
+		rescue => e
+			puts e.message
+			puts e.backtrace.join("\n")
 			@errors.add(:upload, "Error uploading the image to the server, please try again")
 			return false
 		end
@@ -58,7 +68,20 @@ class FileUpload
 		end
 	end
 	
-	def get_path
-		return File.join(@directory, @uniqid + File.extname(@upload.original_filename))
+	def get_path(size='')
+		size = "_#{size}" unless size.blank?
+		return File.join(@directory, "#{@uniqid}#{size}#{File.extname(@upload.original_filename)}")
+	end
+	
+	def build_thumbnails
+		# Called once the uuid has been assigned. Use an image library to resize the original image using get_path()
+		# and save them in a predefined naming convention of <uuid>_<small|medium|large>.<extension>
+		begin
+			thumb = MiniMagick::Image.open(get_path)
+			thumb.resize(SMALL_IMAGE.join('x'))
+			thumb.write(get_path('small'))
+		rescue MiniMagick::Invalid => e
+			puts "MINIMAGIC!::: #{e.inspect}"
+		end
 	end
 end
