@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
   def permission_denied
 	render :file => "public/401.html", :status => :unauthorized, :layout => true
   end
+  
+  def not_found
+	render :file => "public/404.html", :status => :not_found, :layout => true
+  end
 end

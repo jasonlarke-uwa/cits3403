@@ -28,6 +28,7 @@ class ImagesController < ApplicationController
   def new
 	@album = Album.find(params[:album_id])
     @image = Image.new
+	@errors = []
     
     respond_to do |format|
       format.html # new.html.erb
@@ -42,20 +43,48 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
+	# default the param block
+	params[:upload] = [] unless params.has_key?(:upload)
+	params[:image] = [] unless params.has_key?(:image)
+	params[:geo] = [] unless params.has_key?(:geo)
+	params[:upload][:directory] = 'public/i/'
+		
+	upload = FileUpload.new(params[:upload])
     @image = Image.new(params[:image])
 	@image.album = @album
 	
-    respond_to do |format|
-      if @image.save
-		geo = GeotagInfo.new(params[:geo])
-		geo.image = @image
-		geo.save
+	valid = false
+	if upload.valid? && upload.save
+		# steal some values from the upload model
+		# to finalize the Image model
+		@image.uniqid = upload.uniqid
+		@image.mime = upload.info[:mime]
+		@image.width = upload.info[:width]
+		@image.height = upload.info[:height]
 		
-        format.html { redirect_to @image, notice: 'Image was successfully created.' }
+		if (valid = @image.save) && upload.use_geo == 'Y'
+			# Attempt to save the geo info to the DB, don't really care about
+			# the result though, as all the really useful image data has been recorded
+			geo = GeotagInfo.new(params[:geo])
+			geo.image = @image
+			if (!geo.save)
+				logger.info(geo.errors.inspect)
+				logger.info(geo.inspect)
+			end
+		elsif !valid
+			# image didn't save to the database, delete the files from the system
+			upload.destroy
+		end
+	end
+	
+    respond_to do |format|
+      if valid
+        format.html { redirect_to album_images_path(@album) }
         format.json { render json: @image, status: :created, location: @image }
       else
+		@errors = (upload.errors.any? ? upload.errors.full_messages : []) + (@image.errors.any? ? image.errors.full_messages : [])
         format.html { render action: "new" }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
+        format.json { render json: @errors, status: :unprocessable_entity }
       end
     end
   end

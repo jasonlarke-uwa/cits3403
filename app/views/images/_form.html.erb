@@ -1,13 +1,14 @@
-<%= form_for([@album, @image], { :multipart => true }) do |f| %>
+<%= form_for([@album, @image], :html => { :multipart => true }) do |f| %>
 	<%= hidden_field(:geo, :latitude) %>
 	<%= hidden_field(:geo, :longitude) %>
 	<%= hidden_field(:geo, :accuracy) %>
-  <% if @image.errors.any? %>
+	
+  <% if !@errors.empty? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
+      <h2><%= pluralize(@errors.count, "error") %> prohibited this image from being saved:</h2>
 
       <ul>
-      <% @image.errors.full_messages.each do |msg| %>
+      <% @errors.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -16,20 +17,14 @@
 
   <div class="actions">
 	<%= file_field(:upload, :image, :accept => 'image/*') %>
+	<p>
+	<%= f.label('Add a caption to your image (optional)') %> <br/>
+	<%= f.text_field(:caption) %>
+	</p>
+	<p>
+	<%= check_box(:upload, :use_geo, {}, 'Y', 'N') %>
+	<%= f.label('Include geo tag information with image?') %>
+	<p>
     <%= f.submit %>
   </div>
 <% end %>
-
-<script type="text/javascript">
-	(function(d,la,lo,a) {
-		navigator.geolocation.getCurrentPosition(function(pos) {
-			la = d.getElementById(la) || {};
-			lo = d.getElementById(lo) || {};
-			a = d.getElementById(a) || {};
-			var c = pos.coords;
-			la.value = c.latitude;
-			lo.value = c.longitude;
-			a.value = c.accuracy;
-		})
-	})(document,'geo_latitude','geo_longitude','geo_accuracy');
-</script>
