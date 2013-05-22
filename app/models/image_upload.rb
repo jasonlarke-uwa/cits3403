@@ -1,13 +1,16 @@
-require 'rubygems'
-require 'rmagick'
+#require 'rubygems'
+#require 'rmagick'
 
 class ImageUpload
 	include ActiveModel::Validations
 	
-	SMALL_IMAGE = [128, 128]
-	MEDIUM_IMAGE = [400, 400]
-	LARGE_IMAGE = [1024, 1024]
-	
+	IMAGE_SIZES = {
+		:small => [128, 128], 
+		:preview => [200, 200],
+		:medium => [400, 400],
+		:large => [1024, 1024]
+	} 
+
 	attr_accessor :upload
 	attr_accessor :use_geo
 	attr_accessor :directory
@@ -22,7 +25,12 @@ class ImageUpload
 		@upload = attributes[:image] || nil
 		@use_geo = attributes[:use_geo] || nil
 		@directory = attributes[:directory] || nil
-		@info = { :width => nil, :height => nil, :mime => @upload.nil? ? nil : @upload.content_type }
+		@info = { 
+			:width => nil, 
+			:height => nil,
+			:mime => @upload.nil? ? nil : @upload.content_type, 
+			:ext => @upload.nil? ? nil : File.extname(@upload.original_filename)
+		}
 	end
 
 	def read_attribute_for_validation(key)
@@ -37,7 +45,7 @@ class ImageUpload
 			tmp = @upload.tempfile
 			FileUtils.cp tmp.path, path
 			# todo: Get build_thumbnails working
-			# build_thumbnails
+			build_thumbnails
 			return true
 		rescue => e
 			puts e.message
@@ -60,26 +68,29 @@ class ImageUpload
 	protected
 	# Generate a new UUID for new records only
 	def generate_uuid
-		ext = File.extname(@upload.original_filename)
 		loop do
 			# in hex(n), n actually specifies 1/2 of the resultant length so use 8 to fill 16 chars
 			rand_tok = SecureRandom.hex(8)
-			break rand_tok unless File.exists?(File.join(@directory, rand_tok + ext)) || Image.where(:uniqid => rand_tok).exists?
+			break rand_tok unless File.exists?(File.join(@directory, "#{rand_tok}#{@info[:ext]}")) || Image.where(:uniqid => rand_tok).exists?
 		end
 	end
 	
 	def get_path(size='')
 		size = "_#{size}" unless size.blank?
-		return File.join(@directory, "#{@uniqid}#{size}#{File.extname(@upload.original_filename)}")
+		return File.join(@directory, "#{@uniqid}#{size}#{@info[:ext]}")
 	end
 	
 	def build_thumbnails
 		# Called once the uuid has been assigned. Use an image library to resize the original image using get_path()
 		# and save them in a predefined naming convention of <uuid>_<small|medium|large>.<extension>
 		begin
-			thumb = MiniMagick::Image.open(get_path)
-			thumb.resize(SMALL_IMAGE.join('x'))
-			thumb.write(get_path('small'))
+			IMAGE_SIZES.each do |size,dimensions|
+				puts "DEBUG::::path(#{get_path})"
+				puts "DEBUG::::outp(#{get_path(size.to_s)})"
+				img = MiniMagick::Image.open(get_path)
+				img.resize(dimensions.join('x'))
+				img.write(get_path(size.to_s))
+			end
 		rescue MiniMagick::Invalid => e
 			puts "MINIMAGIC!::: #{e.inspect}"
 		end
