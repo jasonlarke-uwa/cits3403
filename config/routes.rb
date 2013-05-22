@@ -9,6 +9,13 @@ Cits3403::Application.routes.draw do
 	resources :images, :shallow => true
   end
   
+  resources :users, :except => [:show, :create, :index, :new, :edit, :update, :destroy]  do
+    member do
+      get 'albums'
+    end
+  end  
+  
+
   # Specify a default controller
   # match '/:action(/:id)', :controller => :main
   
