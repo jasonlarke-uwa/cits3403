@@ -1,17 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>CITS3401 - <%= content_for?(:title) ? yield(:title) : "Home" %></title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<% if user_signed_in? %>
-	<%= button_to "Sign Out", destroy_user_session_path, :method => :delete %>
-<% end %>
-<h1>This is my application</h1>
-<%= yield %>
+	<head>
+		<title>Photo Art - <%= content_for?(:title) ? yield(:title) : "Home" %></title>
+		<%= stylesheet_link_tag "application" %>
+	</head>	
+	<body>
+		<div id="main-wrapper">
+			<header>
+				<div class="content-container">
+					<h1>Photo Art</h1>
+					<a href="/" title="Photo Art" id="return-home">
+						<%= image_tag("title.png", :alt=>"Photo Art") %>
+					</a>
+					<nav>
+						<ul id="navigator">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Profile</a></li>
+							<li><a href="#">Account Settings</a></li>
+							<li><a href="#">Gallery</a></li>
+							<li><a href="#">Sitemap</a>
+						</ul>
+					</nav>
+				</div>
+			</header>
+			<section id="main-content">
+				<div class="content-container">
 
-</body>
+				</div>
+			</section>
+		</div>
+		<%= javascript_include_tag "application" %>
+	</body>
 </html>

@@ -47,7 +47,7 @@ class ImagesController < ApplicationController
 	params[:upload] = [] unless params.has_key?(:upload)
 	params[:image] = [] unless params.has_key?(:image)
 	params[:geo] = [] unless params.has_key?(:geo)
-	params[:upload][:directory] = 'public/i/'
+	params[:upload][:directory] = File.join('public', Cits3403::Application.config.upload_directory)
 		
 	upload = ImageUpload.new(params[:upload])
     @image = Image.new(params[:image])
@@ -61,7 +61,8 @@ class ImagesController < ApplicationController
 		@image.mime = upload.info[:mime]
 		@image.width = upload.info[:width]
 		@image.height = upload.info[:height]
-		
+	        @image.extension = upload.info[:ext]
+	
 		if (valid = @image.save) && upload.use_geo == 'Y'
 			# Attempt to save the geo info to the DB, don't really care about
 			# the result though, as all the really useful image data has been recorded

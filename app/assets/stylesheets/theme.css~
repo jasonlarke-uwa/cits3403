@@ -1,0 +1,81 @@
+/** Common styling containers to centralize the document dimensions **/
+body {
+	background-color: #000;
+}
+
+.content-container {
+	width: 955px;
+	margin: 0 auto;
+	height: 100%;
+}
+
+.content-header {
+	padding-top: 20px;
+}
+
+#main-content {
+	background-image: url('/assets/background.png');
+	background-repeat: repeat-x;
+	min-height: 550px;
+}
+
+#return-home {
+	display: block;
+	float: left;
+	padding-top: 10px;
+}
+
+header {
+	height: 60px;
+	background-color: #000;
+	color: #a2a2a2;
+}
+
+header * {
+	color: inherit
+}
+
+header h1 {
+	display: none;
+}
+
+/** Navigation styling **/
+header nav {
+	display: inline-block;
+	height: 100%;
+}
+
+#navigator {
+	list-style-type: none;
+	margin: 0 auto;
+	padding-left: 60px;
+	height: 100%;
+}
+
+#navigator li {
+	display: inline-block;
+	padding-top: 8px;
+	padding-bottom: 14px;
+	height: 43px;
+
+	/* cross-browser antics */
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+#navigator li:hover, #navigator li.active {
+	background-color: #ffae04;
+	color: black;
+}
+
+#navigator li a {
+	padding: 10px 32px;
+	display: block;
+	text-decoration: none;
+}
+
+

@@ -3,10 +3,14 @@
 
 class ImageUpload
 	include ActiveModel::Validations
+	include MiniMagickHelper
+
+	ALLOWED_TYPES = ['image/jpeg','image/png','image/tiff','image/gif','image/x-icon','image/pjpeg','image/x-tiff']
+
+	PREVIEW_SIZE = [178,178]
 	
 	IMAGE_SIZES = {
 		:small => [128, 128], 
-		:preview => [200, 200],
 		:medium => [400, 400],
 		:large => [1024, 1024]
 	} 
@@ -40,11 +44,18 @@ class ImageUpload
 	def save
 		@uniqid = generate_uuid()
 		path = get_path
+
+		if @upload.nil?
+			@errors.add(:upload, "Error uploading the image to the server, please try again")
+			return false	
+		elsif !ALLOWED_TYPES.include?(@info[:mime])
+			@errors.add(:upload, "Invalid file format uploaded to the server")
+			return false
+		end
 		
 		begin
 			tmp = @upload.tempfile
-			FileUtils.cp tmp.path, path
-			# todo: Get build_thumbnails working
+			FileUtils.cp(tmp.path, path)
 			build_thumbnails
 			return true
 		rescue => e
@@ -58,8 +69,12 @@ class ImageUpload
 	def destroy
 		raise Exception::StandardError.new('Cannot call destroy before calling save') if @uniqid.blank?
 		
+		paths = IMAGE_SIZES.keys.map{|k| get_path(k)}
+		paths << get_path('preview')
+		paths << get_path()
+ 
 		begin
-			File.delete(get_path)
+			File.delete(*paths)
 		rescue
 		end
 	end
@@ -83,6 +98,12 @@ class ImageUpload
 	def build_thumbnails
 		# Called once the uuid has been assigned. Use an image library to resize the original image using get_path()
 		# and save them in a predefined naming convention of <uuid>_<small|medium|large>.<extension>
+		
+		# build the fixed size "preview" icon
+		img = MiniMagick::Image.open(get_path)
+		resize_and_crop_image(img, PREVIEW_SIZE)
+		img.write(get_path('preview'))
+
 		begin
 			IMAGE_SIZES.each do |size,dimensions|
 				puts "DEBUG::::path(#{get_path})"
