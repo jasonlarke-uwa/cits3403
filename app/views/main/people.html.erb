@@ -1,0 +1,16 @@
+<section class="story">
+	<div id="search-form">
+	<%= render "search" %>
+	</div>
+</section>
+<% unless @friends.nil? %>
+<section class="story">
+<h2>Friends</h2>
+<% @friends.each do |friend| %>
+	<div id="friend_<%= friend.id %>">
+		<%= link_to "#{friend.first_name} #{friend.last_name}", album_user_path(User.find(friend.id)) %>
+		<%= button_to "&nbsp;",  :method => destroy, :html => {:class => "remove-user-button"} %>
+	</div>
+<% end %>
+</section>
+<% end %>

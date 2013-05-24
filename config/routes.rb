@@ -7,13 +7,18 @@ Cits3403::Application.routes.draw do
   # routing for the album/image hierarchy
   resources :albums do
 	resources :images, :shallow => true
-  end
-  
+  end  
+
   resources :users, :except => [:show, :create, :index, :new, :edit, :update, :destroy]  do
     member do
       get 'albums'
     end
-  end  
+  end
+  
+  # Singular resources within the main controller
+  match 'gallery' => 'main#gallery'
+  match 'people' => 'main#people'
+  match 'search' => 'main#search'
   
 
   # Specify a default controller

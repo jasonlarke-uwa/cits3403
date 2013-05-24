@@ -1,0 +1,15 @@
+<style type="text/css">#gallery { height: 500px; padding-top: 50px;  }</style>
+
+<div id="gallery">
+<% @images.each do |img| %>
+	<a href="<%= get_image_url(img) %>">
+		<img src="<%= get_image_url(img, 'preview') %>" data-description="<%= img.caption %>" />
+	</a>
+<% end %>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		Galleria.run('#gallery');
+	});
+</script>

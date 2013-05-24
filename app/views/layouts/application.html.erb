@@ -3,6 +3,7 @@
 	<head>
 		<title>Photo Art - <%= content_for?(:title) ? yield(:title) : "Home" %></title>
 		<%= stylesheet_link_tag "application" %>
+		<%= javascript_include_tag "jquery" %>
 	</head>	
 	<body>
 		<div id="main-wrapper">
@@ -14,18 +15,24 @@
 					</a>
 					<nav>
 						<ul id="navigator">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Profile</a></li>
-							<li><a href="#">Account Settings</a></li>
-							<li><a href="#">Gallery</a></li>
-							<li><a href="#">Sitemap</a>
+							<li><%= link_to 'Home', root_path %></li>
+							<li><%= link_to 'Gallery', gallery_path %></li>
+							<li><%= link_to user_signed_in? ? 'Friends' : 'People', people_path %></li>
+						<% if user_signed_in? %>
+							<li><%= link_to 'Albums', albums_user_path(current_user) %></li>
+						<% end %>
 						</ul>
 					</nav>
+					<% if user_signed_in? %>
+						<span class="sign-in-info"><%= button_to 'Log Out', destroy_user_session_path, :method => "delete" %></span>
+					<% else %>
+						<span class="sign-in-info"><%= link_to 'Login', new_user_session_path %> or <%= link_to 'Sign Up', new_user_registration_path %> today!</span>
+					<% end %>
 				</div>
 			</header>
 			<section id="main-content">
 				<div class="content-container">
-
+					<%= yield %>
 				</div>
 			</section>
 		</div>

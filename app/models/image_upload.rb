@@ -1,6 +1,3 @@
-#require 'rubygems'
-#require 'rmagick'
-
 class ImageUpload
 	include ActiveModel::Validations
 	include MiniMagickHelper

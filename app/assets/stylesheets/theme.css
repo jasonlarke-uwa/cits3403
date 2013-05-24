@@ -15,7 +15,7 @@ body {
 }
 
 #main-content {
-	background-image: url('/assets/background.png');
+	background-image: url('background.png');
 	background-repeat: repeat-x;
 	min-height: 550px;
 }
@@ -51,14 +51,14 @@ header nav {
 	margin: 0 auto;
 	padding-left: 60px;
 	height: 100%;
+	display: inline-block;
 }
 
 #navigator li {
 	display: inline-block;
-	padding-top: 8px;
-	padding-bottom: 14px;
-	height: 43px;
-
+	padding-top: 10px;
+	padding-bottom: 12px;
+	
 	/* cross-browser antics */
 	-moz-border-radius-bottomright: 3px;
 	-webkit-border-bottom-right-radius: 3px;
@@ -70,6 +70,9 @@ header nav {
 
 #navigator li:hover, #navigator li.active {
 	background-color: #ffae04;
+	background-image: url('tile-tint.png');
+	background-position: 0 0;
+	background-repeat: repeat-x;
 	color: black;
 }
 
@@ -79,4 +82,34 @@ header nav {
 	text-decoration: none;
 }
 
+.sign-in-info {
+	float: right;
+	display: block;
+	line-height: 58px;
+	font-size: 12px;
+}
 
+.sign-in-info input[type=submit] {
+	text-decoration: underline;
+	background: transparent;
+	border: none;
+	font-size: inherit;
+}
+
+.sign-in-info input[type=submit]:hover {
+	cursor: pointer;
+}
+
+section.story {
+	background-color: #202020;
+	padding: 15px;
+	margin-top: 50px;
+	border: 1px solid #595959;
+	float: left;
+	width: 100%;
+	color: white;
+
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}

@@ -2,7 +2,10 @@ class UsersController < ApplicationController
   def albums
     @user = User.find(params[:id])
     unless @user.nil?
-      if current_user.nil? || (current_user.id != @user.id && !Friend.where({:initiator_id => @user.id, :recipient_id => current_user.id}).exists?) 
+      if !current_user.nil? && current_user.id == @user.id
+	redirect_to albums_path
+	return
+      elsif current_user.nil? || (current_user.id != @user.id && !Friend.where({:initiator_id => @user.id, :recipient_id => current_user.id}).exists?) 
         # Just fetch back the public albums
         @albums = Album.joins(:privacy_level).where(:privacy_levels => {:hint => :public}, :albums => {:owner_id => @user.id})
       else
