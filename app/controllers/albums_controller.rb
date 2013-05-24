@@ -17,9 +17,11 @@ class AlbumsController < ApplicationController
   # GET /albums/1
   # GET /albums/1.json
   def show
+    @images = @album.images
+	
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @album }
+      format.json { render json: [ @album, @images ] }
     end
   end
 
@@ -60,8 +62,6 @@ class AlbumsController < ApplicationController
   # PUT /albums/1
   # PUT /albums/1.json
   def update
-    @album = Album.find(params[:id])
-
     respond_to do |format|
       if @album.update_attributes(params[:album])
         format.html { redirect_to @album, notice: 'Album was successfully updated.' }
@@ -76,7 +76,6 @@ class AlbumsController < ApplicationController
   # DELETE /albums/1
   # DELETE /albums/1.json
   def destroy
-    @album = Album.find(params[:id])
     @album.destroy
 
     respond_to do |format|

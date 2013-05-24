@@ -66,6 +66,7 @@ header nav {
 	-moz-border-radius-bottomleft: 3px;
 	-webkit-border-bottom-left-radius: 3px;
 	border-bottom-left-radius: 3px;
+	margin: 0 3px;
 }
 
 #navigator li:hover, #navigator li.active {
@@ -103,7 +104,7 @@ header nav {
 section.story {
 	background-color: #202020;
 	padding: 15px;
-	margin-top: 50px;
+	margin-top: 30px;
 	border: 1px solid #595959;
 	float: left;
 	width: 100%;

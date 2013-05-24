@@ -1,0 +1,26 @@
+.album-tile {
+	text-align: center;
+	width: 178px;
+	margin: 8px;
+	float: left;
+}
+
+.album-tile > a {
+	display: block;
+	width: 178px;
+	height: 178px;
+	border: 1px solid gray;
+}
+
+.album-tile > span {
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding: 3px;
+}
+
+.new-album-button {
+	float: right;
+}
+

@@ -9,7 +9,7 @@ class MainController < ApplicationController
 	if current_user.nil?
 		@images = Image.joins(:album).where(:albums => { :privacy_level_id => levels['public'] }).order("created_at DESC").limit(100)
 	else
-		@images = Image.joins(:album).where("(albums.privacy_level_id = ?) OR (albums.privacy_level_id = ? AND EXISTS(SELECT 1 FROM friends WHERE friends.initiator_id = albums.owner_id AND friends.recipient_id = ?)", levels['public'], levels['friends'], current_user.id).order("created_at DESC").limit(100) 
+		@images = Image.joins(:album).where("(albums.privacy_level_id = ?) OR (albums.privacy_level_id = ? AND (albums.owner_id = ? OR EXISTS(SELECT 1 FROM friends WHERE friends.initiator_id = albums.owner_id AND friends.recipient_id = ?)))", levels['public'], levels['friends'], current_user.id, current_user.id).order("images.created_at DESC").limit(100) 
 	end
 
 	respond_to do |format|

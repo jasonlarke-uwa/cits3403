@@ -1,21 +1,15 @@
 <%# Assumes the presence of a variable named @albums to be present %>
 
-<style type="text/css">
-        #album_wrapper .album_tile {
-                width: 178px;
-                height: 178px;
-                margin: 8px;
-		border: 1px solid gray;
-                display: inline-block;
-        }
-</style>
+<div id="album-wrapper">
+<% collection = @albums.map{|a| { :album => a, :cover => a.images.first } } %>
 
-<div id="album_wrapper">
-<% covers = @albums.map{|a| a.images.first} %>
-
-<% covers.each do |img| %>
-  <div class="album_tile">
-    <img src="<%= get_image_url(img) %>" />
+<% collection.each do |hash| %>
+  <div class="album-tile">
+	<a href="<%= album_path(hash[:album]) %>">
+    		<img src="<%= get_image_url(hash[:cover], 'preview') %>" />
+  	</a>
+	<span title="<%= hash[:album].title %>"><%= hash[:album].title %></span>
   </div>
 <% end %>
 </div>
+<div class="clearing"></div>

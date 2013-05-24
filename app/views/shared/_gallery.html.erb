@@ -3,7 +3,7 @@
 <div id="gallery">
 <% @images.each do |img| %>
 	<a href="<%= get_image_url(img) %>">
-		<img src="<%= get_image_url(img, 'preview') %>" data-description="<%= img.caption %>" />
+		<img src="<%= get_image_url(img, 'preview') %>" data-caption="<%= img.caption %>" />
 	</a>
 <% end %>
 </div>

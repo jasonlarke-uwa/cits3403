@@ -1,18 +1,6 @@
-<%= button_to "Create new album", new_album_path, :method => 'get', :html => { :class => 'new-album-button' } %>
-<table>
-  <tr>
-    <th>Album Title</th>
-    <th>Album Description</th>
-  </tr>
-
-<% @albums.each do |album| %>
-  <tr>
-    <td><%= link_to album.title, album %></td>
-    <td><%= album.description %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Album', new_album_path %>
+<section class="story">
+	<h3 style="float: left; margin-left: 6px;">Your albums</h3>
+	<%= button_to "Create new album", new_album_path, :method => 'get',  :class => 'new-album-button' %>
+	<div class="clearing"></div>
+	<%= render "shared/album" %>
+</section>

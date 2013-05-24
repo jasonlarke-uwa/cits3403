@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20130523123538) do
     t.string   "mime",       :limit => 32
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
-    t.string   "extension"
+    t.string   "extension",  :limit => 10
   end
 
   add_index "images", ["uniqid"], :name => "index_images_on_uniqid", :unique => true
