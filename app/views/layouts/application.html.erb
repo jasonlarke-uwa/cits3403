@@ -15,11 +15,11 @@
 					</a>
 					<nav>
 						<ul id="navigator">
-							<li><%= link_to 'Home', root_path %></li>
-							<li><%= link_to 'Gallery', gallery_path %></li>
-							<li><%= link_to user_signed_in? ? 'Friends' : 'People', people_path %></li>
+							<li<%= conditional_output(is_current_page(root_path), ' class="active"') %>><%= link_to 'Home', root_path %></li>
+							<li<%= conditional_output(is_current_page(gallery_path), ' class="active"') %>><%= link_to 'Gallery', gallery_path %></li>
+							<li<%= conditional_output(is_current_page(people_path), ' class="active"') %>><%= link_to user_signed_in? ? 'Friends' : 'People', people_path %></li>
 						<% if user_signed_in? %>
-							<li><%= link_to 'Albums', albums_user_path(current_user) %></li>
+							<li<%= conditional_output(is_current_page(albums_user_path(current_user)), ' class="active"') %>><%= link_to 'Albums', albums_user_path(current_user) %></li>
 						<% end %>
 						</ul>
 					</nav>

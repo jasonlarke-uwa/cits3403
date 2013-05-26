@@ -3,33 +3,29 @@ class Search
 
 	attr_accessor :q;
 
-	def initialize(query)
-		@q = query
+	validates_presence_of :q
+	validates_length_of :q, :maximum => 100
+
+	def initialize(attributes={})
+		@attributes = attributes
+		@q = @attributes[:q]
 	end
 
-	def valid?
-		if @q.blank?
-			@errors.add('q', 'Query is a required field. Please specify it.')
-			return false			
-		elsif @q.length > 100
-			@errors.add('q', 'Query cannot exceed 100 characters.')
-			return false
-		end
-
-		return true
+	def read_attribute_for_validation(key)
+		@attributes[key]
 	end
 
 	def run 
 		sql = '1=1 AND '
 		terms = @q.split.map { |s| "%#{s}%" }
-		conditions = terms.map { |s| "(users.first_name LIKE ? OR users.last_name LIKE ? OR users.email LIKE ?)" }
+		conditions = terms.each_with_index.map { |s,i| "(users.first_name LIKE :param#{i} OR users.last_name LIKE :param#{i} OR users.email LIKE :param#{i})" }
 		conditions = conditions.join(' OR ')
 
-		n = terms.count
-		n.times do 
-			terms += terms
+		parameters = {}
+		terms.each_with_index do |s,i|
+			parameters["param#{i}"] = s
 		end
-
-		return User.where(sql, *terms)
+		puts "DEBUG::: query(#{sql + conditions}) + params(#{parameters.inspect})"
+		return User.where(sql + conditions, parameters)
 	end
 end

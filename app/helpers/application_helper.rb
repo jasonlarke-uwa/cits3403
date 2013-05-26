@@ -9,4 +9,12 @@ module ApplicationHelper
 		filename = image.nil? ? 'blank_preview.png' : "#{image.uniqid}#{size}#{image.extension}"
 		return File.join('/', dir, filename)
 	end
+
+	def is_current_page(path) 
+		return request.fullpath == path
+	end	
+
+	def conditional_output(cond, html)
+		return (cond ? html : '').html_safe
+	end
 end

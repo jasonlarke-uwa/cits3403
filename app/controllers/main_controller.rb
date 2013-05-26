@@ -35,7 +35,7 @@ class MainController < ApplicationController
 	@search = nil
 	@errors = nil
 
-	@model = Search.new(params[:q])
+	model = Search.new(params)
 	if model.valid?
 		@search = model.run
 		render "search"
