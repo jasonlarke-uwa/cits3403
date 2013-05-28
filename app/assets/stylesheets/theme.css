@@ -101,16 +101,43 @@ header nav {
 	cursor: pointer;
 }
 
-section.story {
-	background-color: #202020;
+.story {
+	background-color: #fdf6e3;
 	padding: 15px;
 	margin-top: 30px;
 	border: 1px solid #595959;
 	float: left;
-	width: 100%;
-	color: white;
+	width: auto;
+	color: #2aa198;
 
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.story h2, .story h2, .story h3, .story h4, .story h5, .story h6 {
+	margin-top: 0px;	
+	color: #586e75;
+}
+
+.story .c1 {
+	color: #2691d8;
+}
+
+.story .c2 {
+	color: #d04b16;
+}
+
+.story a {
+	color: #2691d8;
+	text-decoration: none;
+}
+
+.story a:hover {
+	text-decoration: underline;
+}
+
+.block-link {
+	display: block;
+	padding: 2px 0px;
 }

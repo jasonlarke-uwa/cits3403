@@ -1,7 +1,7 @@
 .album-tile {
 	text-align: center;
 	width: 200px;
-	margin: 12px;
+	margin: 15px;
 	display: inline-block;
 }
 

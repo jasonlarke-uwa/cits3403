@@ -15,15 +15,13 @@ Cits3403::Application.routes.draw do
     end
   end
   
-  # Singular resources within the main controller
-  match 'gallery' => 'main#gallery'
-  match 'people' => 'main#people'
-  match 'search' => 'main#search'
-  
-
-  # Specify a default controller
-  # match '/:action(/:id)', :controller => :main
-  
+  # Define some root actions which route to the main controller
+  scope :module => 'main' do
+    get 'gallery'
+    get 'people'
+    get 'search'
+    get 'welcome'
+  end  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

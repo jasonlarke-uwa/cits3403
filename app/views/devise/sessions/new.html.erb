@@ -1,20 +1,29 @@
 <% title 'Sign In' %>
-<h2>Sign in</h2>
-<% flash.each do |name,msg| %>
-	<p><%= msg %></p>
+<section class="story">
+	<h2>Sign in</h2>
+<% unless flash.nil? || flash.empty? %>
+	<strong class="c2">The following errors occurred during sign-in:</strong>
+	<ul class="form-errors">
+	<% flash.each do |name,msg| %>
+		<li><%= msg %></li>
+	<% end %>
+	</ul>
 <% end %>
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+	<dl class="form-fields">
+	  <dt><%= f.label :email %></dt> 
+	  <dd><%= f.email_field :email, :autofocus => true %></dd>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+	  <dt><%= f.label :password %></dt>
+	  <dd><%= f.password_field :password %></dd>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
+	<% if devise_mapping.rememberable? -%>
+          <dd><%= f.check_box :remember_me %> <%= f.label :remember_me %></dd>
+	<% end -%>
 
-  <div><%= f.submit "Sign in" %></div>
+  	  <dd><%= f.submit "Sign in" %></dd>
+	</dl>
 <% end %>
 
 <%= render "devise/shared/links" %>
+</section>

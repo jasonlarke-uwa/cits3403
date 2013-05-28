@@ -1,6 +1,17 @@
 <h3>Search for users</h3>
-<%= form_tag(search_path, :method => 'get') do %>
-  <%= label_tag(:q, 'Search for a user by their name or email address below.') %><br/>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
+<form action="<%= search_path %>" method="get">
+
+<% unless @errors.nil? || @errors.empty? %>
+  <strong class="c2">The followings errors occurred when attempting to search:</strong>
+  <ul class="form-errors">
+  <% @errors.messages.each do |attr,msgs| %>
+    <li><%= msgs[0] %></li>
+  <% end %>
+  </ul>
 <% end %>
+
+  <dl class="form-fields">
+    <dt><%= label_tag(:q, 'Search for a user by their name or email address below.') %></dt>
+    <dd><%= text_field_tag(:q) %> <%= submit_tag("Search", :name=>nil, :class=>'inline') %></dd>
+  </dl>
+</form>

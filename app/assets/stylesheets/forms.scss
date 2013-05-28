@@ -1,0 +1,30 @@
+dl.form-fields {
+	dd, dt { 
+		display: block;
+		padding: 2px;
+		width: 100%;
+	}
+
+	dt {
+		padding-left: 5px;
+	}
+
+	/* Global input style (really for textual fields) */
+	dd input {
+		padding: 3px;
+	}
+
+	dd input[type=submit] {
+		margin: 10px auto 0;
+		display: block;
+	}
+}
+
+ul.form-errors {
+	list-style-type: none;
+	padding: 3px 15px 10px;
+
+	li {
+		color: #d04b16;
+	}
+}

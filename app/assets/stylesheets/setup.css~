@@ -1,6 +1,6 @@
 /* global overrides */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -16,7 +16,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: none;
 	outline: none;
-	font: inherit;
+	font-family: inherit;
 	vertical-align: baseline;
 }
 
@@ -29,3 +29,9 @@ time, mark, audio, video {
 .inline { display: inline !important; }
 .block { display: block !important; }
 .inblock { display: inline-block !important; vertical-align: top; }
+.center { text-align: center !important; }
+
+.nomargin { margin: 0 !important; }
+.nopad { padding: 0 !important; }
+
+.fullwidth { width: 100% !important; }

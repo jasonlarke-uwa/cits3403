@@ -1,18 +1,32 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Sign up" %></div>
+<section class="story">
+	<h2>Sign up</h2>
+	<%= devise_error_messages!("The following errors occurred during sign-up:") %>
+<% unless flash.nil? || flash.empty? %>
+	<strong class="c2">The following errors occured during sign-up:</strong>
+	<ul class="form-errors">
+	<% flash.each do |name,msg| %>
+		<li><%= msg %></li>
+	<% end %>
+	</ul>
 <% end %>
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <dl class="form-fields">
+    <dt><%= f.label :email %></dt>
+    <dd><%= f.email_field :email, :autofocus => true %></dd>
 
-<%= render "devise/shared/links" %>
+    <dt><%= f.label :first_name %></dt>
+    <dd><%= f.text_field :first_name %></dd>
+
+    <dt><%= f.label :last_name %></dt>
+    <dd><%= f.text_field :last_name %></dd>
+
+    <dt><%= f.label :password %></dt>
+    <dd><%= f.password_field :password %></dd>
+
+    <dt><%= f.label :password_confirmation %></dt>
+    <dd><%= f.password_field :password_confirmation %></dd>
+
+    <dd><%= f.submit "Sign up" %></dd>
+  </dl>
+<% end %>
+</section>

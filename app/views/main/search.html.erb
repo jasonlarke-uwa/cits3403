@@ -1,1 +1,13 @@
-<%= @search.inspect %>
+<section class="story fullwidth">
+<%= render :partial => "search" %>
+</section>
+
+<section class="story fullwidth">
+<% if @search.empty? %>
+	<h2 class="error nomargin">Your search did not return any results</h2>
+<% else %>
+	<% @search.each do |result| %>
+		<%= render :partial => "profile", :locals => { :user => result } %>
+	<% end %>
+<% end %>
+</section>

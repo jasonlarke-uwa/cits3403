@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
       stored_location_for(resource) || request.referer || root_path
     end
   end
+
+  def after_inactive_sign_up_path_for(resource)
+    welcome_path
+  end
   
   def permission_denied
 	render :file => "public/401.html", :status => :unauthorized, :layout => true

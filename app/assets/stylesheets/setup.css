@@ -29,3 +29,9 @@ time, mark, audio, video {
 .inline { display: inline !important; }
 .block { display: block !important; }
 .inblock { display: inline-block !important; vertical-align: top; }
+.center { text-align: center !important; }
+
+.nomargin { margin: 0 !important; }
+.nopad { padding: 0 !important; }
+
+.fullwidth { width: 100% !important; }

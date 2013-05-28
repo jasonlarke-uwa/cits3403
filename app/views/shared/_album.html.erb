@@ -1,15 +1,24 @@
 <%# Assumes the presence of a variable named @albums to be present %>
 
-<div id="album-wrapper">
+<div class="album-wrapper">
 <% collection = @albums.map{|a| { :album => a, :cover => a.images.first } } %>
 
-<% collection.each do |hash| %>
-  <div class="album-tile">
-	<a href="<%= album_path(hash[:album]) %>">
-    		<img src="<%= get_image_url(hash[:cover], 'preview') %>" />
-  	</a>
-	<span title="<%= hash[:album].title %>"><%= hash[:album].title %></span>
-  </div>
+<% if collection.empty? %>
+	<% user = @user.nil? ? current_user : @user %>
+        <% unless user.nil? %>
+	  <h2 class="nomargin center"><%= "#{user.first_name} #{user.last_name}" %> has not uploaded any albums yet!</h2>
+	<% else %>
+	  <h2 class="nomargin center"><%= "No albums to show!" %></h2>
+	<% end %>
+<% else %>
+	<% collection.each do |hash| %>
+	<div class="album-tile">
+	  <a href="<%= album_path(hash[:album]) %>" style="background-image: url('<%= get_image_url(hash[:cover], 'preview') %>');">
+	    &nbsp;
+	  </a>
+	  <span title="<%= hash[:album].title %>"><%= hash[:album].title %></span>
+	</div>
+	<% end %>
+	<div class="clearing"></div>
 <% end %>
 </div>
-<div class="clearing"></div>
