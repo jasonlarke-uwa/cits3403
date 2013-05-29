@@ -18,6 +18,10 @@ dl.form-fields {
 		margin: 10px auto 0;
 		display: block;
 	}
+
+	textarea {
+		resize: none;
+	}
 }
 
 ul.form-errors {

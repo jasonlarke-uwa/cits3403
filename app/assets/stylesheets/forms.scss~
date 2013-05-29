@@ -23,4 +23,8 @@ dl.form-fields {
 ul.form-errors {
 	list-style-type: none;
 	padding: 3px 15px 10px;
+
+	li {
+		color: #d04b16;
+	}
 }

@@ -6,12 +6,13 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @images = @album.images.all
+    redirect_to(album_path(@album))
+    #@images = @album.images.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @images }
-    end
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.json { render json: @images }
+    #end
   end
 
   # GET /images/1

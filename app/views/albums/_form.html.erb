@@ -1,28 +1,23 @@
 <%= form_for(@album) do |f| %>
   <% if @album.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@album.errors.count, "error") %> prohibited this album from being saved:</h2>
-
-      <ul>
-      <% @album.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+	<strong class="c2">The following errors occurred while saving the album:</strong>
+	<ul class="form-errors">
+	<% @album.errors.full_messages.each do |msg| %>
+		<li><%= msg %></li>
+	<% end %>
+	</ul>      
   <% end %>
 
-  <div class="actions">
-	<p>
-	<%= f.label('Title') %> <br/>
-	<%= f.text_field(:title) %>
-	</p>
-	<p>
-	<%= f.label('Description') %> <br/>
-	<%= f.text_area(:description, :rows => 3) %>
-	</p>
-	<p>
-	<%= f.label('Privacy Level') %> <br/>
-	<%= f.select(:privacy_level_id, options_from_collection_for_select(PrivacyLevel.all, 'id', 'display'))%>
-    <%= f.submit %>
-  </div>
+  <dl class="form-fields">
+	<dt><%= f.label("Album title") %></dt>
+	<dd><%= f.text_field(:title) %></dd>
+
+	<dt><%= f.label("Description") %></dt>
+	<dd><%= f.text_area(:description, :rows => 3, :cols => 44) %></dd>
+	
+	<dt><%= f.label("Who can view this album?") %></dt>
+	<dd><%= f.select(:privacy_level_id, options_from_collection_for_select(PrivacyLevel.all, 'id', 'display')) %></dd>
+
+	<dd><%= f.submit %>
+  </dl>
 <% end %>

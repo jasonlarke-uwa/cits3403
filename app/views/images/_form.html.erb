@@ -1,6 +1,6 @@
 <%= form_for([@album, @image], :html => { :multipart => true }) do |f| %>
 
-  <% unless @errors.nil || @errors.empty? %>
+  <% unless @errors.nil? || @errors.empty? %>
 	<strong class="c2">The following errors occurred while saving the image:</strong>
 	<ul class="form-errors">
 	<% @errors.each do |msg| %>

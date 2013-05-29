@@ -1,3 +1,7 @@
 <% title @album.title %>
 <%= album_breadcrumb(@album) %>
+<section class="breadcrumb">
+	<%= link_to "Add new image", new_album_image_path(@album) %>
+</section>
+<div class="clearing"></div>
 <%= render "shared/gallery" %>
