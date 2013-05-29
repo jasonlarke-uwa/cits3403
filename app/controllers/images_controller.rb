@@ -116,7 +116,7 @@ class ImagesController < ApplicationController
 	return false unless (action == 'show' || authenticate_user!)
 	
 	# Get image (if it exists, for non-nested methods)
-	@image = params.has_key?(:id) ? Image.find(params[:id]) : nil
+	@image = params.has_key?(:id) ? Image.where(:uniqid => params[:id]).first: nil
 	# Get album (if it exists, for nested methods)
 	@album = params.has_key?(:album_id) ? Album.find(params[:album_id]) : nil
 	

@@ -20,9 +20,11 @@ class MainController < ApplicationController
   
   def people
 	@friends = nil
+	@requests = nil
 
   	unless current_user.nil?
 		@friends = Friend.joins("LEFT JOIN users ON users.id = friends.recipient_id").where("friends.initiator_id = ?", current_user.id).select("users.first_name, users.last_name, users.id, EXISTS(SELECT 1 FROM friends AS f WHERE f.initiator_id = friends.recipient_id AND f.recipient_id = friends.initiator_id) AS accepted")
+		@requests = Friend.joins("LEFT JOIN users ON users.id = friends.initiator_id").where("friends.recipient_id = ? AND NOT EXISTS(SELECT 1 FROM friends AS f WHERE f.recipient_id = friends.initiator_id AND f.initiator_id = friends.recipient_id)", current_user.id).select("users.first_name, users.last_name, users.id")
 	end
 
 	respond_to do |format|
@@ -35,12 +37,12 @@ class MainController < ApplicationController
 	@search = nil
 	@errors = nil
 
-	model = Search.new(params)
-	if model.valid?
-		@search = model.run
+	@model = Search.new(params)
+	if @model.valid?
+		@search = @model.run
 		render "search"
 	else
-		@errors = model.errors
+		@errors = @model.errors
 		render "people"
 	end
   end

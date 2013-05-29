@@ -115,6 +115,44 @@ header nav {
 	border-radius: 5px;
 }
 
+.breadcrumb {
+	background-color: #fdf6e3;
+	padding: 8px;
+	margin-top: 30px;
+	border: 1px solid #595959;
+	float: left;
+	width: auto;
+	color: #2aa198;
+
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;	
+}
+
+.stage {
+	background-color: #393939;
+	padding: 8px;
+	margin-top: 30px;
+	border: 1px solid #737373;
+	float: left;
+	width: 100%;
+
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;	
+}
+
+.stage a.direct-image {
+	display: block;
+	width: 915px;
+	height: 915px;
+	background-position: center center;
+	background-color: black;
+	background-repeat: no-repeat;
+	text-decoration: none;
+	margin: 15px auto;
+}
+
 .story h2, .story h2, .story h3, .story h4, .story h5, .story h6 {
 	margin-top: 0px;	
 	color: #586e75;
@@ -128,16 +166,36 @@ header nav {
 	color: #d04b16;
 }
 
-.story a {
+.story a, .breadcrumb a {
 	color: #2691d8;
 	text-decoration: none;
 }
 
-.story a:hover {
+.story a:hover, .breadcrumb a:hover {
 	text-decoration: underline;
 }
 
 .block-link {
 	display: block;
 	padding: 2px 0px;
+}
+
+.galleria-image {
+	cursor: pointer;
+}
+
+#gallery {
+	width: 100%;
+	height: 500px;
+	padding: 30px 10px 0px;
+}
+
+.accept-user-button, .remove-user-button {
+	display: inline;
+	margin-left: 15px;
+}
+
+form.button_to {
+	display: inline;
+	width: auto;
 }

@@ -21,6 +21,12 @@ Cits3403::Application.routes.draw do
     get 'people'
     get 'search'
     get 'welcome'
+  end
+
+  namespace 'friends' do
+    post 'accept/:id', :action => 'accept', :as => 'accept'
+    post 'request/:id', :action => 'req', :as => 'request'
+    post 'remove/:id', :action => 'remove', :as => 'remove'
   end  
   # The priority is based upon order of creation:
   # first created -> highest priority.

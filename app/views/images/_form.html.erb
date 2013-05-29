@@ -1,30 +1,30 @@
 <%= form_for([@album, @image], :html => { :multipart => true }) do |f| %>
+
+  <% unless @errors.nil || @errors.empty? %>
+	<strong class="c2">The following errors occurred while saving the image:</strong>
+	<ul class="form-errors">
+	<% @errors.each do |msg| %>
+		<li><%= msg %></li>
+	<% end %>
+	</ul>      
+  <% end %>
+ 
+  <dl class="form-fields">
 	<%= hidden_field(:geo, :latitude) %>
 	<%= hidden_field(:geo, :longitude) %>
 	<%= hidden_field(:geo, :accuracy) %>
-	
-  <% if !@errors.empty? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@errors.count, "error") %> prohibited this image from being saved:</h2>
 
-      <ul>
-      <% @errors.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<dt><%= f.label('Select the image you wish to upload') %></dt>
+	<dd><%= file_field(:upload, :image, :accept => 'image/*') %></dd>
 
-  <div class="actions">
-	<%= file_field(:upload, :image, :accept => 'image/*') %>
-	<p>
-	<%= f.label('Add a caption to your image (optional)') %> <br/>
-	<%= f.text_field(:caption) %>
-	</p>
-	<p>
-	<%= check_box(:upload, :use_geo, {}, 'Y', 'N') %>
-	<%= f.label('Include geo tag information with image?') %>
-	<p>
-    <%= f.submit %>
-  </div>
+	<dt><%= f.label('Caption your image (optional)') %></dt>
+	<dd><%= f.text_field(:caption) %></dd>
+
+	<dd>
+	  <%= check_box(:upload, :use_geo, {}, 'Y', 'N') %>
+	  <%= f.label('Include location information with image?') %>
+	</dd>
+
+	<dd><%= f.submit %></dd>
+  </dl>
 <% end %>

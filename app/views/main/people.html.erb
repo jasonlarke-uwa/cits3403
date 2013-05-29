@@ -1,15 +1,36 @@
+<% title (current_user.nil? ? "People" : "Friends") %>
+
 <section class="story fullwidth">
 	<div id="search-form">
 	<%= render "search" %>
 	</div>
 </section>
+
+<% unless @requests.nil? || @requests.empty? %>
+<section class="story fullwidth">
+<h2>Pending friend requests</h2>
+<% @requests.each do |request| %>
+	<div id="request_<%= request.id %>">
+		<form style="display: inline;" action="<%= friends_accept_path(request) %>" method="post">	
+			<%= token_tag form_authenticity_token %>
+			<%= link_to "#{request.first_name} #{request.last_name}", albums_user_path(request.id) %>
+			<%= submit_tag "Accept", :class => "accept-user-button" %>
+		</form>
+	</div>
+<% end %>
+</section>
+<% end %>
+
 <% unless @friends.nil? %>
-<section class="story">
+<section class="story fullwidth">
 <h2>Friends</h2>
 <% @friends.each do |friend| %>
 	<div id="friend_<%= friend.id %>">
-		<%= link_to "#{friend.first_name} #{friend.last_name}", album_user_path(User.find(friend.id)) %>
-		<%= button_to "&nbsp;",  :method => destroy, :html => {:class => "remove-user-button"} %>
+		<form style="display: inline;" action="<%= friends_remove_path(friend) %>" method="post">	
+			<%= token_tag form_authenticity_token %>
+			<%= link_to "#{friend.first_name} #{friend.last_name}", albums_user_path(friend.id) %>
+			<%= submit_tag "Remove", :class => "remove-user-button" %>
+		</form>
 	</div>
 <% end %>
 </section>

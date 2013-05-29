@@ -1,3 +1,10 @@
 <section class="story fullwidth">
+<% unless current_user.nil? || current_user.id == @user.id %>
+	<% if !Friend.where({:initiator_id => current_user.id, :recipient_id => @user.id}).exists? %>
+		<%= button_to "Add to friends", friends_request_path(@user), :method=>:post %>
+	<% elsif !Friend.where({:initiator_id => @user.id, :recipient_id => current_user.id}).exists? %>
+		<span>Friend request sent!</span>
+	<% end %>
+<% end %>
 <%= render 'shared/album' %>
 </section>

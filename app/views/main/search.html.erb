@@ -4,8 +4,9 @@
 
 <section class="story fullwidth">
 <% if @search.empty? %>
-	<h2 class="error nomargin">Your search did not return any results</h2>
+	<h3 class="error nomargin">Your search did not return any results</h3>
 <% else %>
+	<h3>Results for &quot;<%= @model.q %>&quot;</h3>
 	<% @search.each do |result| %>
 		<%= render :partial => "profile", :locals => { :user => result } %>
 	<% end %>

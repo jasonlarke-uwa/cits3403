@@ -9,7 +9,7 @@ class ImageUpload
 	IMAGE_SIZES = {
 		:small => [128, 128], 
 		:medium => [400, 400],
-		:large => [1024, 1024]
+		:large => [915, 915]
 	} 
 
 	attr_accessor :upload

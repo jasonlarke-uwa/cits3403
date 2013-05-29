@@ -1,4 +1,7 @@
-<p id="notice"><%= notice %></p>
-
-
-<%= link_to 'Edit', edit_image_path(@image) %> |
+<%= image_breadcrumb(@image) %>
+<section class="stage center">
+	<a class="direct-image" href="<%= get_image_url(@image) %>" style="background-image: url('<%= get_image_url(@image, 'large') %>')">&nbsp;</a>
+<% unless @image.caption.blank? %>
+	<em>&quot;<%= @image.caption %>&quot;</em>
+<% end %>
+</section>

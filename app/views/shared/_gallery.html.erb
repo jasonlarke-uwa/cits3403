@@ -1,9 +1,7 @@
-<style type="text/css">#gallery { height: 500px; padding-top: 50px;  }</style>
-
 <div id="gallery">
 <% @images.each do |img| %>
 	<a href="<%= get_image_url(img) %>">
-		<img src="<%= get_image_url(img, 'preview') %>" data-caption="<%= img.caption %>" />
+		<img id="image_<%= img.id %>" src="<%= get_image_url(img, 'preview') %>" data-caption="<%= img.caption %>" />
 	</a>
 <% end %>
 </div>
@@ -11,5 +9,14 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		Galleria.run('#gallery');
+		$('.galleria-image').click(function() {
+			var img = $(this).find('img').get(0);
+			var src = img.src;
+			src = src.substring(src.lastIndexOf('/') + 1);
+			var i1 = src.indexOf('.'),
+			    i2 = src.indexOf('_'),
+		            i = (i2 > 0 ? (i2 < i1 ? i2 : i1) : i1);
+			window.location.href = "/images/" + src.substring(0, i);
+		});
 	});
 </script>
