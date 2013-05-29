@@ -17,7 +17,7 @@ Cits3403::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.file_settings = { :location => Rails.root.join('tmp/mail') }
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { :host => 'cits3403e.csse.uwa.edu.au' }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
