@@ -1,4 +1,5 @@
 <p>Welcome <%= @first_name %> <%= @last_name %>!</p>
 
 <p>You can confirm your account email through the link below:</p>
-<p><%= link_to 'Confirm my account', { :only_path => false, :controller => "devise/confirmations", :action => :create, :confirmation_token => @resource.confirmation_token } %>
+<p><%= link_to "Confirm my account", confirmation_url(@resource, :confirmation_token => @resource.confirmation_token, :only_path => false) %></p>
+<%#<p><%= link_to 'Confirm my account', { :only_path => false, :controller => "devise/confirmations", :action => :create, :confirmation_token => @resource.confirmation_token } %>
