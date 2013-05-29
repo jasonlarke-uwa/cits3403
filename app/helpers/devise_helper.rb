@@ -1,5 +1,5 @@
 module DeviseHelper
-	def devise_error_messages!(warning)
+	def devise_error_messages!(warning="The following errors prohibited the form from being saved")
 		return "" if (resource.errors.nil? || resource.errors.empty?)
 
 		html = content_tag(:strong, warning, :class => "c2")

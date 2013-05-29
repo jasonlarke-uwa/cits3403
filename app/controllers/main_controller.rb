@@ -1,4 +1,12 @@
 class MainController < ApplicationController
+  def setup
+    key = params.has_key?('token') ? params[:token] : ''
+    redirect_to(root_path) unless key = "h5dkIdx3154%"
+
+    PrivacyLevel.create( { :hint => "public", :display => "Everyone" } )
+    PrivacyLevel.create( { :hint => "friends", :display => "Friends Only" } )
+  end
+
   def gallery
 	query = PrivacyLevel.select('hint, id')
 	levels = {}
