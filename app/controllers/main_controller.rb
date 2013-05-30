@@ -1,10 +1,10 @@
 class MainController < ApplicationController
   def setup
     key = params.has_key?('token') ? params[:token] : ''
-    redirect_to(root_path) unless key = "h5dkIdx3154%"
+    redirect_to(root_path) unless key == "h5dkIdx3154"
 
-    PrivacyLevel.create( { :hint => "public", :display => "Everyone" } )
-    PrivacyLevel.create( { :hint => "friends", :display => "Friends Only" } )
+    PrivacyLevel.create( { :hint => "public", :display => "Everyone" } ) unless PrivacyLevel.where(:hint => "public").exists?
+    PrivacyLevel.create( { :hint => "friends", :display => "Friends Only" } ) unless PrivacyLevel.where(:hint => "friends").exists?
   end
 
   def gallery

@@ -6,9 +6,9 @@
 <% if collection.empty? %>
 	<% user = @user.nil? ? current_user : @user %>
         <% unless user.nil? %>
-	  <h2 class="nomargin center"><%= "#{user.first_name} #{user.last_name}" %> has not uploaded any albums yet!</h2>
+	  <h4 class="nomargin center"><%= "#{user.first_name} #{user.last_name}" %> has not uploaded any albums yet!</h4>
 	<% else %>
-	  <h2 class="nomargin center"><%= "No albums to show!" %></h2>
+	  <h4 class="nomargin center"><%= "No albums to show!" %></h4>
 	<% end %>
 <% else %>
 	<% collection.each do |hash| %>

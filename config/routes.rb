@@ -21,6 +21,7 @@ Cits3403::Application.routes.draw do
     get 'people'
     get 'search'
     get 'welcome'
+    get 'setup'
   end
 
   namespace 'friends' do

@@ -1,7 +1,9 @@
 <% title @album.title %>
 <%= album_breadcrumb(@album) %>
+<% unless current_user.nil? || current_user.id != @album.owner_id %>
 <section class="breadcrumb">
 	<%= link_to "Add new image", new_album_image_path(@album) %>
 </section>
+<% end %>
 <div class="clearing"></div>
 <%= render "shared/gallery" %>
